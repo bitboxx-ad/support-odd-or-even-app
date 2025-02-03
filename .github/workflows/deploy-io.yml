@@ -1,0 +1,45 @@
+name: Deploy app-ads.txt to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app-ads.txt'  # ✅ `app-ads.txt` に変更があった場合のみ実行
+  workflow_dispatch:  # ✅ 手動実行も可能
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-io"
+  cancel-in-progress: false
+
+jobs:
+  deploy-ads-txt:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p io-deploy
+          cp app-ads.txt io-deploy/app-ads.txt # ✅ `app-ads.txt` をデプロイ対象フォルダにコピー
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './io-deploy'  # ✅ `app-ads.txt` だけをアップロード
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
