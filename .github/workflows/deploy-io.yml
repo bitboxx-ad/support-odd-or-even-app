@@ -35,7 +35,7 @@ jobs:
         run: |
           mkdir -p io-deploy
           cp app-ads.txt io-deploy/app-ads.txt # ✅ `app-ads.txt` をデプロイ対象フォルダにコピー
-          cp app-ads.txt io-deploy/index.html
+          cp index.html io-deploy/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
