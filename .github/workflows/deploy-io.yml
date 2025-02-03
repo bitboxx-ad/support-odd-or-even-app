@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'app-ads.txt'  # ✅ `app-ads.txt` に変更があった場合のみ実行
+      - 'index.html'  # ✅ `app-ads.txt` に変更があった場合のみ実行
   workflow_dispatch:  # ✅ 手動実行も可能
 
 permissions:
